@@ -1,0 +1,41 @@
+import requests
+from bs4 import BeautifulSoup
+import re
+import markovify
+
+# Step 1: Install required packages
+# pip install requests beautifulsoup4 markovify
+
+# Step 2: Scrape Wikipedia pages
+def scrape_wikipedia(url):
+    html = requests.get(url).text
+    soup = BeautifulSoup(html, "html.parser")
+    text = soup.get_text()
+    return text
+
+# Scrape a Wikipedia page
+text = scrape_wikipedia("https://en.wikipedia.org/wiki/Python_(programming_language)")
+
+# Step 3: Preprocess the text
+def preprocess_text(text):
+    # Remove unwanted characters
+    text = re.sub(r"\[[0-9]*\]", "", text)
+    text = re.sub(r"\s+", " ", text)
+
+    # Remove unwanted words
+    stop_words = ["References", "External links", "See also", "Further reading"]
+    for word in stop_words:
+        text = re.sub(word, "", text)
+
+    return text
+
+text = preprocess_text(text)
+
+# Step 4: Train a Markov chain model
+model = markovify.Text(text)
+
+# Step 5: Generate sentences
+for i in range(5):
+    print(model.make_sentence())
+
+# CREATED WITH THE HELP OF OPEN AI CHAT-GPT: https://chat.openai.com/chat

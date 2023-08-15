@@ -1,0 +1,40 @@
+import wikipediaapi
+import random
+
+# Create a Wikipedia API instance
+wiki_wiki = wikipediaapi.Wikipedia('en')
+
+# Get a random Wikipedia page title
+random_page_title = random.choice(list(wiki_wiki.page_titles.keys()))
+
+# Fetch the Wikipedia page
+page = wiki_wiki.page(random_page_title)
+
+# Extract the page summary
+page_summary = page.summary
+
+# Function to create a fantasy story
+def create_fantasy_story(summary):
+    # Replace some common terms to make the story more fantasy-like
+    summary = summary.replace("is a", "is an ancient and mysterious")
+    summary = summary.replace("located in", "hidden deep within")
+    summary = summary.replace("known for", "renowned for its magical powers and")
+
+    # Create the story
+    story = f"In a world of mythical creatures and enchanted landscapes, there lies {summary}."
+    story += f" Legends speak of brave adventurers who dare to seek its secrets."
+    story += " One fateful day, a young hero named Elandra embarked on a perilous journey to uncover the mysteries"
+    story += " of this fantastical realm. Armed with a sword imbued with the essence of starlight and a heart full of courage,"
+    story += " Elandra faced treacherous forests, riddling sphinxes, and swirling vortexes of magic."
+    story += " With each challenge, Elandra grew stronger, unlocking ancient spells and forming alliances with talking animals."
+
+    return story
+
+# Generate the fantasy story
+fantasy_story = create_fantasy_story(page_summary)
+
+# Print the story
+print(fantasy_story)
+
+
+# CREATED WITH THE HELP OF OPEN-AI CHAT GPT: https://chat.openai.com/chat
